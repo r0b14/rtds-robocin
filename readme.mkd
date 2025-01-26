@@ -112,7 +112,7 @@ Este projeto serve como uma **prova de conceito** para para demonstrar o aprendi
 
 - Videos/Tutoriais (ESP32 e ARDUINO)
 
-  [MPU6050 - ARDUINO](https://www.youtube.com/watch?v=zkdMM4jqtF0)
+  [MPU6050 - ARDUINO](https://www.youtube.com/watch?v=zkdMM4jqtF0) | [Repositório Github](https://github.com/Hykudoru/MPU6050-Gyro-Motion-Tracking)
 
   [GY-521 - ESP32](https://www.youtube.com/watch?v=VEU_fLbrySo)
 
