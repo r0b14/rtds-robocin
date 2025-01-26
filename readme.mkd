@@ -1,0 +1,134 @@
+# Projeto Odometria Inercial
+
+## Resumo
+Este projéto/repostiório contém uma implementação em **C++** para estimar a odometria inercial de um robô a partir de dados de giroscópio, repassado através de um arquivo CSV. O objetivo é integrar os valores de velocidade angular (`local_w`) e comparar com leituras de ângulo (`odometry_theta`), demonstrando a lógica de odometria inercial sem precisar de um sensor físico conectado.
+
+
+## Sumário
+
+- [Objetivo](#objetivo)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Compilação e Execução](#compilando-e-executando)
+- [Exemplo de Uso](#exemplo-de-uso)
+- [Dificuldades e Referências](#dificuldades-e-referências)
+- [Contribuição](#contribuição)
+- [Licença](#licença)
+
+## Objetivo
+
+- Estimar qual trajetória o robô precisa fazer baseado nos dados recebido dos sensores inerciais(giroscópios e acelerômetros). *No caso atual, vamos extrair esses dados de um arquivo CSV.*
+  - Ler dados de giroscópio (velocidade angular) e ângulo.
+  - Integrar a velocidade angular ao longo do tempo para estimar o deslocamento angular.
+
+Este projeto serve como uma **prova de conceito** para para demonstrar o aprendizado sobre odometria inercial, análise de dados de sensores e manipulação de arquivos em C++.
+
+## Estrutura do Projeto
+
+- **dados.csv**: arquivo com dados de teste.  
+- **main.cpp**: lógica para:
+  1. Ler o CSV.
+  2. Armazenar os valores de `local_w` e `odometry_theta`.
+  3. Integrar a velocidade angular para calcular um ângulo estimado.
+  4. Comparar o ângulo calculado com `odometry_theta`.
+
+## Compilando e executando
+
+### Requisitos
+
+- Compilador C++ (g++, clang++ etc.)  
+- Ambiente Linux/Ubuntu (ou outro compatível) recomendado, mas deve funcionar em outros SOs.
+
+### Passos de Compilação
+
+1. **Clone** este repositório:
+   ```bash
+   git clone https://github.com/r0b14/rtds-robocin.git 
+   cd rtds-robocin/
+   ```
+2. **Complilação**
+
+  `g++ main.cpp -o simulador_odometria`
+
+3. **execução do arquivo binário**
+
+  `./simulador_odometria`
+
+## Exemplo de Uso
+
+**Possiveis dados no arquivo `dados.csv`:**
+
+  ```csv
+    local_w,odometry_theta
+    1.25,0.98
+    2.50,1.95
+    3.75,2.90
+    5.00,3.90
+    6.25,4.85
+  ```
+
+**A saída pode ser algo assim:**
+
+  ```lua
+    Processando 5 linhas de dados:
+
+    Linha 0 | local_w = 1.25 rad/s, odometry_theta = 0.98 rad, angle_calc (integrado) = 0.125 rad
+    Linha 1 | local_w = 2.50 rad/s, odometry_theta = 1.95 rad, angle_calc (integrado) = 0.375 rad
+    Linha 2 | local_w = 3.75 rad/s, odometry_theta = 2.90 rad, angle_calc (integrado) = 0.750 rad
+    Linha 3 | local_w = 5.00 rad/s, odometry_theta = 3.90 rad, angle_calc (integrado) = 1.250 rad
+    Linha 4 | local_w = 6.25 rad/s, odometry_theta = 4.85 rad, angle_calc (integrado) = 1.875 rad
+    Valor final de angle_calc: 1.875 rad
+    Valor final de odometry_theta (ultimo registro): 4.85 rad
+  ```
+
+## Dificuldades e Referências
+
+**Dificuldades:**
+
+- Configurar ambiente de compilação em Linux (Ubuntu) usando g++.
+
+- Passei bastante tempo para entender a lógica de integração de velocidade angular (odometria inercial) e de que modo poderia implementar o código.
+
+    Conversei bastante com participantes e monitores da seleção e partir para uma implemntação mais básica.
+
+
+- Manipular arquivos CSV em C++ (uso de <fstream>, <sstream>).
+
+    Organizei os dados do arquivo em um vetor, na qual denominei `sensordata` 
+
+- Atenção:
+
+  - **Ambientes Dektops:** a implmentação de <fstream>, <iostream>, etc. é típico de um programa em C++ rodando no PC, lendo um arquivo CSV.
+
+  - **Ambiente Arduino**: o uso de #include <Wire.h> é típico de um ambiente Arduino ou plataforma similar e lê valores diretamente do MPU-6050 via I2C (frisado bastante durante a leitura de documentações).
+
+
+> Passei bastante tempo esbarrando em bugs e percebi, lendo no stack overflow percebi que reunir tudo em um único arquivo que tente compilar tanto o que é Arduino quanto o que é PC não é trivial, pois as bibliotecas são diferentes (Wire vs. fstream).
+
+**Referências:**
+
+- [Documentação C++](https://en.cppreference.com/w/)
+
+- [ssl-firmware robocin](https://github.com/robocin/ssl-firmware/wiki)
+
+- Videos/Tutoriais (ESP32 e ARDUINO)
+
+  [MPU6050 - ARDUINO](https://www.youtube.com/watch?v=zkdMM4jqtF0)
+
+  [GY-521 - ESP32](https://www.youtube.com/watch?v=VEU_fLbrySo)
+
+  [Uso de Giróscopio/acelerômetro](https://www.youtube.com/watch?v=o-ekkWT5C98)
+
+## Contribuição
+
+Caso queira contribuir com melhorias, correções ou novas funcionalidades, sinta-se livre para abrir Issues e enviar Pull Requests.
+Sugestões são sempre bem-vindas!
+
+
+## Licença
+
+Este projeto está licenciado sob os termos da Licença MIT. Sinta-se à vontade para usar, modificar e distribuir conforme as condições estabelecidas.
+
+## Redes Socais
+
+- [Portifólio](https://sites.google.com/cin.ufpe.br/rtds)
+- [Linktree](https://linktr.ee/_r0b14)
