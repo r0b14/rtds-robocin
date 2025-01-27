@@ -80,6 +80,11 @@ int main() {
         // Integrar a velocidade angular
         angle_calc += dataVector[i].local_w * dt; //angle_calc(n+1) = angle_calc(n)+(local_wn*Δt).
 
+        /**
+            float local_w_rad = dataVector[i].local_w * (3.14159f / 180.0f);
+            angle_calc += local_w_rad * dt;
+         */
+
         // Exibir resultados da "linha i"
         std::cout << "Linha " << i
                   << " | local_w = " << dataVector[i].local_w
@@ -87,7 +92,7 @@ int main() {
                   << " rad, angle_calc (integrado) = " << angle_calc << " rad\n";
     }
 
-    // Ao final, podemos comparar "angle_calc" com o último odometry_theta, etc.
+    // Ao final, podemos comparar "angle_calc" com o último odometry_theta
     std::cout << "\nValor final de angle_calc: " << angle_calc << " rad\n";
     std::cout << "Valor final de odometry_theta (ultimo registro): "
               << dataVector.back().odometry_theta << " rad\n";
